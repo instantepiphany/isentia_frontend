@@ -12,29 +12,23 @@ import { debounceTime } from 'rxjs/operators';
 
 export class AppComponent {
   title = 'FlickrViewer';
-  tags: Subject<string>;
-  imageObjects: any;
+  searchQuery: string = '';
   flickrData: any;
 
 
-	constructor(
-		private http: HttpClient
-	) {
-    this.tags = new Subject();
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
 	ngOnInit() {
     this.http.get("http://127.0.0.1:3000/public")
       .subscribe((data) => this.flickrData = data);
-    this.tags.asObservable().pipe(debounceTime(800))
-      .subscribe((tags) => {
-      this.http.get(`http://127.0.0.1:3000/public?tags=${tags}`)
-        .subscribe((data) => this.flickrData = data);
-    });
   }
 
-  tagsKeyUp(tags: string) {
-    this.tags.next(tags);
+  searchTags() {
+    this.http.get(`http://127.0.0.1:3000/public?tags=${this.searchQuery}`)
+      .subscribe((data) => this.flickrData = data);
   }
 }
 
