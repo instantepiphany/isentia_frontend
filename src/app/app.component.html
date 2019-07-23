@@ -1,0 +1,14 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{ title }}!
+  </h1>
+</div>
+<h2>Flickrdata: </h2>
+<label>Tags: <input type=text (keyup)="tagsKeyUp($event.target.value)"></label>
+<div *ngFor="let photo of flickrData?.items">
+  {{ photo.title }}
+
+  <div [innerHtml]="photo.content"></div>
+</div>
+<div>{{flickrData | json}}</div>
